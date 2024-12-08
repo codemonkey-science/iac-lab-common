@@ -17,8 +17,7 @@ on:
 jobs:
   run-playbook:
     runs-on: self-hosted
-    container:
-      image: ghcr.io/codemonkey-science/ansible-ci-image:latest
+    container: ghcr.io/codemonkey-science/ansible-ci-image:latest
 
     env:
       ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
@@ -27,11 +26,6 @@ jobs:
       SYSTEM_UPDATE: ${{ github.event.inputs.system_update || 'false' }}
 
     steps:
-      - name: Check workspace permissions
-        run: |
-          ls -la /__w
-          whoami
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
