@@ -39,7 +39,6 @@ jobs:
 
       - name: Run Ansible Playbook
         run: |
-          bash -c "
           whoami
           ls -la /github/home/.ansible/
           cd ~
@@ -47,4 +46,3 @@ jobs:
           cd $GITHUB_WORKSPACE
           ansible-playbook -vvv -i ansible/inventory ansible/site.yml \
             --extra-vars 'ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=${{ env.SYSTEM_UPDATE }}'
-          "
