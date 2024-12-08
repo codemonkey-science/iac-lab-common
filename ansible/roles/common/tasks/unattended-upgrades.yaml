@@ -1,0 +1,23 @@
+- name: Enable unattended upgrades
+  ansible.builtin.apt:
+    pkg: unattended-upgrades
+    state: present
+  notify: Restart unattended-upgrades
+
+- name: Configure unattended upgrades
+  copy:
+    src: 50unattended-upgrades
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart unattended-upgrades
+
+- name: Enable periodic updates
+  copy:
+    src: 20auto-upgrades
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart unattended-upgrades

@@ -1,0 +1,17 @@
+[proxmox]
+pve1.east.codemonkey.science
+pve2.east.codemonkey.science
+
+[non_proxmox]
+auth.east.codemonkey.science
+cti.east.codemonkey.science
+misp.east.codemonkey.science
+monitor.east.codemonkey.science
+ntfy.east.codemonkey.science
+sim.east.codemonkey.science
+siem.east.codemonkey.science
+status.east.codemonkey.science
+
+[all:children]
+proxmox
+non_proxmox

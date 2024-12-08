@@ -1,0 +1,34 @@
+- name: Check if fix-prompts.sh script is already on remote host
+  ansible.builtin.stat:
+    path: /tmp/fix-prompts.sh
+  register: script_stat
+
+- name: Copy fix-prompts.sh script to remote host
+  ansible.builtin.copy:
+    src: files/fix-prompts.sh
+    dest: /tmp/fix-prompts.sh
+    mode: '0755'
+  changed_when: false
+
+- name: Run fix-prompts.sh script
+  ansible.builtin.command:
+    cmd: /tmp/fix-prompts.sh
+  register: script_output
+  changed_when: script_output.rc == 1
+  failed_when: script_output.rc == 2
+
+# - name: Debug script output
+#   ansible.builtin.debug:
+#     var: script_output.stdout_lines
+
+- name: Check if fix-prompts.sh script is still on remote host
+  ansible.builtin.stat:
+    path: /tmp/fix-prompts.sh
+  register: script_stat
+
+- name: Delete fix-prompts.sh script
+  ansible.builtin.file:
+    path: /tmp/fix-prompts.sh
+    state: absent
+  when: script_stat.stat.exists
+  changed_when: false

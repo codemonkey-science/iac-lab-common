@@ -1,0 +1,26 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+  tags: system_update
+
+- name: Upgrade all packages
+  ansible.builtin.apt:
+    upgrade: dist
+    state: latest
+  tags: system_update
+
+- name: Autoclean apt cache
+  ansible.builtin.apt:
+    autoclean: yes
+  tags: system_update
+
+- name: Autoremove unnecessary packages
+  ansible.builtin.apt:
+    autoremove: yes
+  tags: system_update
+
+- name: Purge unnecessary packages
+  ansible.builtin.shell:
+    cmd: apt purge -y
+  tags: system_update

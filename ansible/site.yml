@@ -1,0 +1,34 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Check if ANSIBLE_BECOME_PASS is set
+      fail:
+        msg: >
+          The ANSIBLE_BECOME_PASS environment variable is not set.
+          Please set it using the following command:
+          export ANSIBLE_BECOME_PASS='your_sudo_password'
+      when: lookup('env', 'ANSIBLE_BECOME_PASS') == ''
+
+    - name: Confirm ANSIBLE_BECOME_PASS is set
+      debug:
+        msg: "ANSIBLE_BECOME_PASS environment variable is set."
+
+- hosts: all
+  gather_facts: yes
+  become: yes
+  roles:
+    - common
+
+- hosts: all
+  gather_facts: yes
+  become: yes
+  roles:
+    - role: system_update
+      when: system_update | default(false)
+
+- hosts: non_proxmox
+  gather_facts: yes
+  become: yes
+  roles:
+    - docker

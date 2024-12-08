@@ -1,0 +1,18 @@
+---
+- name: Update apt cache
+  become: true
+  become_user: root
+  apt:
+    update_cache: yes
+
+- name: Restart SSHD
+  service:
+    name: sshd
+    state: restarted
+
+- name: Restart unattended-upgrades
+  become: true
+  become_user: root
+  service:
+    name: unattended-upgrades
+    state: restarted
