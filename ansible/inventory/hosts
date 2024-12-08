@@ -11,6 +11,8 @@ ntfy.east.codemonkey.science
 sim.east.codemonkey.science
 siem.east.codemonkey.science
 status.east.codemonkey.science
+github-runner1.east.codemonkey.science
+github-runner2.east.codemonkey.science
 
 [all:children]
 proxmox
