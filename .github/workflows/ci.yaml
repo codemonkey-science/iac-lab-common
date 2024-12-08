@@ -21,7 +21,7 @@ jobs:
       image: ghcr.io/codemonkey-science/ansible-ci-image:latest
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.GHCR_PAT }}
+        password: "${{ secrets.GHCR_PAT }}"
 
     env:
       ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
