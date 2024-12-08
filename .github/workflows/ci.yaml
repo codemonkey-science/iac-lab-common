@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p /home/ansible/.ssh
           echo "${{ secrets.PRIVATE_KEY }}" | tee /home/ansible/.ssh/id_rsa > /dev/null
-          sudo chmod 600 /home/ansible/.ssh/id_rsa
+          chmod 600 /home/ansible/.ssh/id_rsa
 
       - name: Run Ansible Playbook
         run: |
