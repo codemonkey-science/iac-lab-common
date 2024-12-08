@@ -30,5 +30,4 @@
   ansible.builtin.file:
     path: /tmp/fix-prompts.sh
     state: absent
-  when: script_stat.stat.exists
-  changed_when: false
+  when: script_stat is defined and script_stat.stat.exists
