@@ -23,14 +23,17 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get update
-        apt-get install -y python3 python3-pip sshpass
+        apt-get install -y python3 python3-pip python3-venv sshpass
 
-    - name: Install Ansible
+    - name: Set up virtual environment and install Ansible
       run: |
-        python3 -m pip install --upgrade pip
+        python3 -m venv ansible-env
+        source ansible-env/bin/activate
+        pip install --upgrade pip
         pip install ansible
 
     - name: Run Ansible Playbook
       run: |
+        source ansible-env/bin/activate
         cd $GITHUB_WORKSPACE
         ansible-playbook -i inventory site.yml --extra-vars "ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=true"
