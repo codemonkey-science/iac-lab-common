@@ -24,6 +24,7 @@ jobs:
       ANSIBLE_HOST_KEY_CHECKING: False
       ANSIBLE_CONFIG: ansible/ansible.cfg
       ANSIBLE_LOCAL_TEMP: /home/ansible/.ansible/tmp
+      ANSIBLE_REMOTE_TEMP: /home/ansible/.ansible/tmp
       SYSTEM_UPDATE: ${{ github.event.inputs.system_update || 'false' }}
 
     steps:
