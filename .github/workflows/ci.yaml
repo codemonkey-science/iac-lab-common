@@ -27,6 +27,11 @@ jobs:
       SYSTEM_UPDATE: ${{ github.event.inputs.system_update || 'false' }}
 
     steps:
+      - name: Check workspace permissions
+        run: |
+          ls -la /home/ansible/workspace
+          whoami
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
