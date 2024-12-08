@@ -41,6 +41,7 @@ jobs:
         run: |
           whoami
           ls -la /github/home/.ansible/
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
           cd ~
           . /home/ansible/ansible-env/bin/activate
           cd $GITHUB_WORKSPACE
