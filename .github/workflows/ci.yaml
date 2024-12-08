@@ -31,13 +31,15 @@ jobs:
 
       - name: Write private key to disk
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          sudo -u ansible mkdir -p /home/ansible/.ssh
+          echo "${{ secrets.PRIVATE_KEY }}" | sudo -u ansible tee /home/ansible/.ssh/id_rsa > /dev/null
+          sudo chmod 600 /home/ansible/.ssh/id_rsa
 
       - name: Run Ansible Playbook
         run: |
-          . ansible-env/bin/activate
+          sudo -u ansible bash -c "
+          . /home/ansible/ansible-env/bin/activate
           cd $GITHUB_WORKSPACE
           ansible-playbook -i ansible/inventory ansible/site.yml \
-            --extra-vars "ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=${{ env.SYSTEM_UPDATE }}"
+            --extra-vars 'ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=${{ env.SYSTEM_UPDATE }}'
+          "
