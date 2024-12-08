@@ -31,6 +31,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        
+      - name: Verify Environment Variables and Permissions
+        run: |
+          echo "Current user: $(whoami)"
+          echo "HOME directory: $HOME"
+          ls -ld $HOME
+          ls -ld /github
+          ls -ld /github/home
+          ls -ld /home/ansible
 
       - name: Write private key to disk
         run: |
