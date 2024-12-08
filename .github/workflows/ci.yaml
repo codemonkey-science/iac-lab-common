@@ -17,7 +17,7 @@ on:
 jobs:
   run-playbook:
     runs-on: self-hosted
-    container: ubuntu:latest
+    container: ghcr.io/codemonkey-science/ansible-ci-image:latest
 
     env:
       ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
