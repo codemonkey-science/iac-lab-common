@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: Check workspace permissions
         run: |
-          ls -la /home/ansible/workspace
+          ls -la /__w
           whoami
 
       - name: Checkout repository
