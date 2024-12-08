@@ -32,6 +32,10 @@ jobs:
         pip install --upgrade pip
         pip install ansible
 
+    - name: Disable SSH Host Key Checking
+      run: |
+        echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> ~/.ssh/config
+
     - name: Run Ansible Playbook
       run: |
         . ansible-env/bin/activate
