@@ -34,7 +34,9 @@ jobs:
 
     - name: Disable SSH Host Key Checking
       run: |
-        echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> ~/.ssh/config
+        mkdir -p ~/.ssh
+        echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" > ~/.ssh/config
+        chmod 600 ~/.ssh/config
 
     - name: Run Ansible Playbook
       run: |
