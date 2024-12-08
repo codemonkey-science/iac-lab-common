@@ -20,6 +20,7 @@ jobs:
     container: ghcr.io/codemonkey-science/ansible-ci-image:latest
 
     env:
+      HOME: /home/ansible 
       ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
       ANSIBLE_HOST_KEY_CHECKING: False
       ANSIBLE_CONFIG: ansible/ansible.cfg
