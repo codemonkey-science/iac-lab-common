@@ -17,6 +17,11 @@ on:
 jobs:
   run-playbook:
     runs-on: self-hosted
+    container:
+      image: ghcr.io/codemonkey-science/ansible-ci-image:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GHCR_PAT }}
 
     env:
       ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
@@ -27,35 +32,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker container
-        uses: actions/checkout@v2
-        with:
-          # Ensure the repository is checked out in the default workspace
-          path: /home/ansible/workspace
-
-      - name: Pull Docker Image
-        run: |
-          docker pull ghcr.io/codemonkey-science/ansible-ci-image:latest
-
-      - name: Run Ansible Playbook
-        uses: docker://ghcr.io/codemonkey-science/ansible-ci-image:latest
-        with:
-          args: >
-            ansible-playbook -i ansible/inventory ansible/site.yml
-            --extra-vars "ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=${{ env.SYSTEM_UPDATE }}"
-        env:
-          ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
-          ANSIBLE_HOST_KEY_CHECKING: False
-          ANSIBLE_CONFIG: ansible/ansible.cfg
-          SYSTEM_UPDATE: ${{ github.event.inputs.system_update || 'false' }}
 
       - name: Write private key to disk
         run: |
