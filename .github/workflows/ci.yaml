@@ -36,4 +36,4 @@ jobs:
       run: |
         . ansible-env/bin/activate
         cd $GITHUB_WORKSPACE
-        ansible-playbook -i inventory site.yml --extra-vars "ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=true"
+        ansible-playbook -i inventory ansible/site.yml --extra-vars "ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=true"
