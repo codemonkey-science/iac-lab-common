@@ -19,15 +19,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - name: Set up Docker container
+      uses: addnab/docker-run-action@v3
       with:
-        python-version: '3.x'
-
-    - name: Install Ansible
-      run: |
-        python -m pip install --upgrade pip
-        pip install ansible
-
-    - name: Run Ansible Playbook
-      run: ansible-playbook site.yml
+        image: ubuntu:latest
+        options: -v ${{ github.workspace }}:/workspace
+        run: |
+          apt-get update
+          apt-get install -y python3-pip sshpass
+          python3 -m pip install --upgrade pip
+          pip install ansible
+          cd /workspace
+          ansible-playbook -i inventory site.yml --extra-vars "ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=true"
