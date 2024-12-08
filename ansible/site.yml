@@ -17,12 +17,14 @@
 - hosts: all
   gather_facts: yes
   become: yes
+  ignore_unreachable: yes
   roles:
     - common
 
 - hosts: all
   gather_facts: yes
   become: yes
+  ignore_unreachable: yes
   roles:
     - role: system_update
       when: system_update | default(false)
@@ -30,5 +32,6 @@
 - hosts: non_proxmox
   gather_facts: yes
   become: yes
+  ignore_unreachable: yes
   roles:
     - docker

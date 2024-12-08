@@ -17,3 +17,6 @@ github-runner2.east.codemonkey.science
 [all:children]
 proxmox
 non_proxmox
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
