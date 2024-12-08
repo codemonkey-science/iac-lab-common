@@ -30,6 +30,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          path: /home/ansible/workspace
 
       - name: Write private key to disk
         run: |
