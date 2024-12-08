@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Verify Environment Variables and Permissions
         run: |
           echo "Current user: $(whoami)"
@@ -55,5 +55,5 @@ jobs:
           cd ~
           . /home/ansible/ansible-env/bin/activate
           cd $GITHUB_WORKSPACE
-          ansible-playbook -vvv -i ansible/inventory ansible/site.yml \
+          ansible-playbook -v -i ansible/inventory ansible/site.yml \
             --extra-vars 'ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=${{ env.SYSTEM_UPDATE }}'
