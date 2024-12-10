@@ -64,6 +64,11 @@ jobs:
           mkdir -p /home/ansible/.ansible/cp
           chmod 700 /home/ansible/.ansible/cp
 
+      - name: Verify remote_tmp directory
+        run: |
+          echo "Remote Temp Directory:"
+          ls -ld /tmp
+        
       - name: Run Ansible Playbook
         run: |
           whoami
