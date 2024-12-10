@@ -25,8 +25,8 @@ jobs:
       ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
       ANSIBLE_HOST_KEY_CHECKING: False
       ANSIBLE_CONFIG: ansible/ansible.cfg
-      ANSIBLE_LOCAL_TEMP: /tmp
-      ANSIBLE_REMOTE_TEMP: /tmp
+      ANSIBLE_LOCAL_TEMP: /home/ansible/.ansible/tmp
+      ANSIBLE_REMOTE_TEMP: /home/ansible/.ansible/tmp
       SYSTEM_UPDATE: ${{ github.event.inputs.system_update || 'false' }}
 
     steps:
@@ -35,11 +35,20 @@ jobs:
 
       - name: Verify Environment Variables and Permissions
         run: |
-          echo "Current user: $(whoami)"
-          echo "HOME directory: $HOME"
+          echo "Environment Variables:"
+          echo "----------------------------------------------------------------------"
+          printenv
+          echo "----------------------------------------------------------------------"
+          echo ""
+          echo "Permissions:"
+          echo "----------------------------------------------------------------------"
+          echo "\$HOME:"
           ls -ld $HOME
+          echo ""
+          echo "/github"
           ls -ld /github
-          ls -ld /github/home
+          echo ""
+          echo "/home/ansible"
           ls -ld /home/ansible
 
       - name: Write private key to disk
