@@ -76,10 +76,11 @@ jobs:
           cd ~
           . /home/ansible/ansible-env/bin/activate
           cd $GITHUB_WORKSPACE
-          ansible-playbook -v -i ansible/inventory ansible/site.yml \
-            --extra-vars 'ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=${{ env.SYSTEM_UPDATE }}'
+          ansible-playbook -i ansible/inventory ansible/site.yml \
+            --extra-vars '{\"ANSIBLE_BECOME_PASS\":\"${{ secrets.ANSIBLE_BECOME_PASS }}\", \"system_update\":${{ env.SYSTEM_UPDATE }}}'
 
       - name: Remove private key from disk
+        if: always() 
         run: |
           if [ -f /home/ansible/.ssh/id_rsa ]; then
             rm -f /home/ansible/.ssh/id_rsa || { echo "Failed to delete private key"; exit 1; }
@@ -91,4 +92,3 @@ jobs:
           else
             echo "Private key does not exist for some reason. Nothing to delete. Please investigate."
             exit 3
-          fi
