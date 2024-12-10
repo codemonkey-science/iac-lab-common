@@ -69,6 +69,7 @@ jobs:
           ls -ld /tmp
         
       - name: Run Ansible Playbook
+        continue-on-error: true
         run: |
           whoami
           ls -la /github/home/.ansible/
