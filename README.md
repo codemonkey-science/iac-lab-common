@@ -1,6 +1,6 @@
 ## Overview
 
-[![CI](https://github.com/codemonkey-science/iac-lab-common/actions/workflows/ci.yaml/badge.svg)](https://github.com/codemonkey-science/iac-lab-common/actions/workflows/ci.yaml)
+[![CI/CD Pipeline (self-hosted)](https://github.com/codemonkey-science/iac-lab-common/actions/workflows/ci.yaml/badge.svg)](https://github.com/codemonkey-science/iac-lab-common/actions/workflows/ci.yaml)
 
 This repository contains the Ansible configuration to apply the `common` role to your lab environment. The `common` role includes tasks such as fixing bash prompts, configuring timezones, hardening SSH, and enabling unattended upgrades.
 
