@@ -21,7 +21,7 @@ jobs:
 
     env:
       HOME: /home/ansible
-      TMPDIR: /home/ansible/tmp
+      TMPDIR: /tmp
       ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
       ANSIBLE_HOST_KEY_CHECKING: False
       ANSIBLE_CONFIG: ansible/ansible.cfg
