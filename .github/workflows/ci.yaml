@@ -1,4 +1,4 @@
-name: CI
+name: Run Ansible Common role via on-prem self-hosted runner
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       system_update:
-        description: "Set to Y to install patches and updates"
+        description: "Install all available patches and updates? (Y/N)"
         required: false
         default: "N"
 
