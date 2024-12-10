@@ -25,8 +25,8 @@ jobs:
       ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
       ANSIBLE_HOST_KEY_CHECKING: False
       ANSIBLE_CONFIG: ansible/ansible.cfg
-      ANSIBLE_LOCAL_TEMP: /home/ansible/.ansible/tmp
-      ANSIBLE_REMOTE_TEMP: /home/ansible/.ansible/tmp
+      ANSIBLE_LOCAL_TEMP: /tmp
+      ANSIBLE_REMOTE_TEMP: /tmp
       SYSTEM_UPDATE: ${{ github.event.inputs.system_update || 'false' }}
 
     steps:
