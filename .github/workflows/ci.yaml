@@ -10,9 +10,9 @@ on:
   workflow_dispatch:
     inputs:
       system_update:
-        description: "Set to true to install patches and updates"
+        description: "Set to Y to install patches and updates"
         required: false
-        default: "false"
+        default: "N"
 
 jobs:
   run-playbook:
@@ -32,24 +32,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Verify Environment Variables and Permissions
-        run: |
-          echo "Environment Variables:"
-          echo "----------------------------------------------------------------------"
-          printenv
-          echo "----------------------------------------------------------------------"
-          echo ""
-          echo "Permissions:"
-          echo "----------------------------------------------------------------------"
-          echo "\$HOME:"
-          ls -ld $HOME
-          echo ""
-          echo "/github"
-          ls -ld /github
-          echo ""
-          echo "/home/ansible"
-          ls -ld /home/ansible
-
       - name: Write private key to disk
         run: |
           mkdir -p /home/ansible/.ssh
@@ -62,11 +44,6 @@ jobs:
           chmod 700 /home/ansible/.ansible/tmp
           mkdir -p /home/ansible/.ansible/cp
           chmod 700 /home/ansible/.ansible/cp
-
-      - name: Verify remote_tmp directory
-        run: |
-          echo "Remote Temp Directory:"
-          ls -ld /tmp
         
       - name: Run Ansible Playbook
         continue-on-error: true
@@ -78,7 +55,7 @@ jobs:
           . /home/ansible/ansible-env/bin/activate
           cd $GITHUB_WORKSPACE
           ansible-playbook -i ansible/inventory ansible/site.yml \
-            --extra-vars "{\"ANSIBLE_BECOME_PASS\":\"${{ secrets.ANSIBLE_BECOME_PASS }}\", \"system_update\":$([ \"${{ env.SYSTEM_UPDATE }}\" == \"true\" ] && echo true || echo false)}"
+            --extra-vars "{\"ANSIBLE_BECOME_PASS\":\"${{ secrets.ANSIBLE_BECOME_PASS }}\", \"system_update\":${{ github.event.inputs.system_update == 'Y' && 'true' || 'false' }}}"
 
       - name: Remove private key from disk
         if: always() 
