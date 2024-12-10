@@ -57,6 +57,13 @@ jobs:
           echo "${{ secrets.PRIVATE_KEY }}" | tee /home/ansible/.ssh/id_rsa > /dev/null
           chmod 600 /home/ansible/.ssh/id_rsa
 
+      - name: Set up Ansible temp folders
+        run: |
+          mkdir -p /home/ansible/.ansible/tmp
+          chmod 700 /home/ansible/.ansible/tmp
+          mkdir -p /home/ansible/.ansible/cp
+          chmod 700 /home/ansible/.ansible/cp
+
       - name: Run Ansible Playbook
         run: |
           whoami
