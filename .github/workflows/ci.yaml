@@ -1,4 +1,4 @@
-name: Run Ansible Common role via on-prem self-hosted runner
+name: CI/CD Pipeline (self-hosted)
 
 on:
   push:
