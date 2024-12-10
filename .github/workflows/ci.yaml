@@ -20,7 +20,8 @@ jobs:
     container: ghcr.io/codemonkey-science/ansible-ci-image:latest
 
     env:
-      HOME: /home/ansible 
+      HOME: /home/ansible
+      TMPDIR: /home/ansible/tmp
       ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
       ANSIBLE_HOST_KEY_CHECKING: False
       ANSIBLE_CONFIG: ansible/ansible.cfg
@@ -57,3 +58,17 @@ jobs:
           cd $GITHUB_WORKSPACE
           ansible-playbook -v -i ansible/inventory ansible/site.yml \
             --extra-vars 'ANSIBLE_BECOME_PASS=${{ secrets.ANSIBLE_BECOME_PASS }} system_update=${{ env.SYSTEM_UPDATE }}'
+
+      - name: Remove private key from disk
+        run: |
+          if [ -f /home/ansible/.ssh/id_rsa ]; then
+            rm -f /home/ansible/.ssh/id_rsa || { echo "Failed to delete private key"; exit 1; }
+            if [ ! -f /home/ansible/.ssh/id_rsa ]; then
+              echo "Private key successfully deleted"
+            else
+              echo "Failed to delete private key"; exit 2;
+            fi
+          else
+            echo "Private key does not exist for some reason. Nothing to delete. Please investigate."
+            exit 3
+          fi
